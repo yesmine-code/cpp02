@@ -48,26 +48,25 @@ Fixed Fixed::operator * (Fixed const & inst) const
 }
 Fixed	Fixed::operator + (Fixed const & inst) const
 {
-	Fixed res;
-	res.setRawBits(this->toFloat() + inst.toFloat());
+	Fixed res(this->toFloat() + inst.toFloat());
 	return (res);
 }
 Fixed	Fixed::operator - (Fixed const & inst) const
 {
-	Fixed res;
-	res.setRawBits(this->toFloat() - inst.toFloat());
+	Fixed res(this->toFloat() - inst.toFloat());
 	return (res);
 }
 
 Fixed	Fixed::operator / (Fixed const & inst) const
 {
-	Fixed res;
-
-	if (inst.toFloat() != 0)
-		res.setRawBits(this->toFloat() / inst.toFloat());
-	else
-		std::cout<<"sorry you cannot make a division with 0 "<<std::endl;
-	return (res);
+	if (inst.toFloat() != 0) {
+		Fixed res(this->toFloat() / inst.toFloat());
+		return (res);
+	}
+	else {
+		std::cout << "sorry you cannot make a division with 0 " << std::endl;
+		return 0;
+	}
 }
 
 Fixed	&Fixed::operator++(void)
@@ -121,32 +120,32 @@ Fixed const &Fixed::min(Fixed const &inst1, Fixed const &inst2){
 
 bool	Fixed::operator>( const Fixed &inst ) const
 {
-	return (this->getRawBits() > inst.getRawBits());
+	return (this->val > inst.val);
 }
 
 bool	Fixed::operator<( const Fixed &inst ) const
 {
-	return (inst > *this);
+	return (inst.val > this->val);
 }
 
 bool	Fixed::operator>=( const Fixed &inst ) const
 {
-	return (!(*this < inst));
+	return (this->val >= inst.val);
 }
 
 bool	Fixed::operator<=( const Fixed &inst ) const
 {
-	return (!(*this > inst));
+	return (this->val <= inst.val);
 }
 
 bool	Fixed::operator==( const Fixed &inst ) const
 {
-	return (inst.getRawBits() == this->getRawBits());
+	return (inst.val == this->val);
 }
 
 bool	Fixed::operator!=( const Fixed &inst) const
 {
-	return (!(inst == *this));
+	return (inst.val != this->val);
 }
 
 int ft_pow(int val, int pow)
